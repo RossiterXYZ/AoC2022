@@ -11,4 +11,4 @@ with open("Day1\Input.txt") as InputFile: # Use file to refer to the file object
 ElfData.sort(reverse=True)
 
 print(f'Puzzle 1: Highest Elf = {ElfData[0]}')
-print(f'Puzzle 1: Highest 3 Elves = {ElfData[0] + ElfData[1] + ElfData[2]}')
+print(f'Puzzle 2: Highest 3 Elves = {ElfData[0] + ElfData[1] + ElfData[2]}')
