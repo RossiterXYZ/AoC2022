@@ -2,7 +2,7 @@ CurrentElfCalories = 0
 ElfData = []
 
 with open("Day1\Input.txt") as InputFile: # Use file to refer to the file object
-   for InputLine in InputFile:
+    for InputLine in InputFile:
         if InputLine == "\n":
             ElfData.append(CurrentElfCalories)
             CurrentElfCalories = 0
