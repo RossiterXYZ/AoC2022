@@ -1,14 +1,14 @@
 TotalScore1 = 0
 RulesTable1 = {
-    'A X': 1 + 3,
-    'B X': 1 + 0,
-    'C X': 1 + 6,
-    'A Y': 2 + 6,
-    'B Y': 2 + 3,
-    'C Y': 2 + 0,
-    'A Z': 3 + 0,
-    'B Z': 3 + 6,
-    'C Z': 3 + 3,
+    'A X': 1 + 3, #D
+    'B X': 1 + 0, #L
+    'C X': 1 + 6, #W
+    'A Y': 2 + 6, #W
+    'B Y': 2 + 3, #D
+    'C Y': 2 + 0, #L
+    'A Z': 3 + 0, #L
+    'B Z': 3 + 6, #W
+    'C Z': 3 + 3, #D
 }
 TotalScore2 = 0
 RulesTable2 = {
@@ -26,9 +26,9 @@ RulesTable2 = {
 with open("Day2\Input.txt") as InputFile:
     for InputLine in InputFile:
         InputLine = InputLine.strip()
-        #Must easier to just put into a table actually.
-        #InputLine.split(' ')
+
         TotalScore1 += RulesTable1[InputLine]
         TotalScore2 += RulesTable2[InputLine]
+
 print(f'Puzzle 1: Assumed Rules = {TotalScore1}')
 print(f'Puzzle 2: Actual Rules = {TotalScore2}')
