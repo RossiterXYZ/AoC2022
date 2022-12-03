@@ -23,7 +23,7 @@ RulesTable2 = {
     'C Z': 1 + 6, #R
 }
 
-with open("Day2\Input.txt") as InputFile: # Use file to refer to the file object
+with open("Day2\Input.txt") as InputFile:
     for InputLine in InputFile:
         InputLine = InputLine.strip()
         #Must easier to just put into a table actually.
