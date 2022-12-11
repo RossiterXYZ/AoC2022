@@ -5,9 +5,6 @@ def ParseFile(_File):
             ReturnValue.append([int(x) for x in InputLine.strip()])
     return ReturnValue
 
-def SplitValues(_Line):
-    return _Line.strip().split('')
-
 def CountVisibleTrees(_TreeArray):
     SeenList = [[0 for _ in range(len(_TreeArray[0]))] for _ in range(len(_TreeArray))]
     for yIndex in range(len(_TreeArray)):
