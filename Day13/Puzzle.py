@@ -1,42 +1,68 @@
 def ParseFile(_File):
-    ReturnValue = []
-    FileTmp = ""
     with open(_File) as InputFile:
         return [[eval(y) for y in x.split('\n')] for x in InputFile.read().strip().split("\n\n")]
 
-def CompareValues(_a, _b):
-    #If both values are integers, the lower integer should come first. If the left integer is lower than the right integer, the inputs are in the right order. If the left integer is higher than the right integer, the inputs are not in the right order. Otherwise, the inputs are the same integer; continue checking the next part of the input.
-    #If both values are lists, compare the first value of each list, then the second value, and so on. If the left list runs out of items first, the inputs are in the right order. If the right list runs out of items first, the inputs are not in the right order. If the lists are the same length and no comparison makes a decision about the order, continue checking the next part of the input.
-    #If exactly one value is an integer, convert the integer to a list which contains that integer as its only value, then retry the comparison. For example, if comparing [0,0,0] and 2, convert the right value to [2] (a list containing 2); the result is then found by instead comparing [0,0,0] and [2].
+def CompareValues(_a, _b, _ColdStart = True):
+    if not _ColdStart:
+        aType = type(_a) is int
+        bType = type(_b) is int
 
-    if _a == None and not _b == None:
-        return -1
-    if _b == None and not _a == None:
-        return 1
+        if aType and bType:
+            return max(-1, min(_b - _a, 1))
 
-    aType = type(_a) is int
-    bType = type(_b) is int
+        if aType:
+            _a = [_a]
+        if bType:
+            _b = [_b]
 
-    if aType and bType and not _a == _b:
-        return max(-1, min(_b - _a, 1))
+    ListLength = max(len(_a), len(_b))
+    for Index in range(ListLength):
 
-    return aType, bType
+        if Index >= len(_a) and Index < len(_b):
+            return 1
+        if Index < len(_a) and Index >= len(_b):
+            return -1
+
+        Value = CompareValues(_a[Index], _b[Index], False)
+        if Value in [-1, 1]:
+            return Value
 
 def ComparePackets(_Input):
     ValidPairs = 0
-    Index = 0
 
-    #ValidPairs = CompareValues(_Input[Index][0], _Input[Index][1])
-    ValidPairs = CompareValues(1, 1)
+    for Index in range(len(_Input)):
+        Value = CompareValues(_Input[Index][0], _Input[Index][1])
+        if Value > 0:
+            ValidPairs += Index + 1
 
     return ValidPairs
 
+def PreparePart2(_Input):
+    NewList = [[[2]], [[6]]]
+    for Index in range(len(_Input)):
+        NewList.append(_Input[Index][0])
+        NewList.append(_Input[Index][1])
+    return NewList
+
+#Seems Python sort doesn't work the way I expected. It's BubbleSort time.
+def SortPackets(_Input):
+    for OuterLoop in range(len(_Input)):
+        for Index in range(len(_Input) -1):
+            if CompareValues(_Input[Index], _Input[Index+1]) > 0:
+                _Input[Index], _Input[Index+1] = _Input[Index+1], _Input[Index]
+    return _Input
+
 PacketList = ParseFile("Day13\Input.txt")
 
-print(ComparePackets(PacketList))
+Part1 = ComparePackets(PacketList)
 
-Part1 = 1
-Part2 = 1
+PacketList = PreparePart2(PacketList)
+TmpSorted = list(reversed(SortPackets(PacketList)))
+CodeIndicies = 1
+for Index in range(len(TmpSorted)):
+    if TmpSorted[Index] in [[[2]], [[6]]]:
+        CodeIndicies *= (1 + Index)
+Part2 = CodeIndicies
 
 print(f'Puzzle 1: {Part1}')
 print(f'Puzzle 2: {Part2}')
